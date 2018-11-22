@@ -1,0 +1,141 @@
+<!-- 参考链接：https://www.cnblogs.com/greatluoluo/p/5882508.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件捕获先发生还是事件冒泡先发生</title>
+
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    div{
+      border: 1px solid;
+      padding: 1em;
+    }
+
+    .marginB50{
+      margin-bottom: 50px;
+    }
+  </style>
+</head>
+<body onload="setup()">
+  <div id="outer" class="marginB50">
+    <div id="inner">CLICK</div>
+  </div>
+
+  <script type="text/javascript">
+    function setup(){
+      var outer = document.getElementById('outer');
+      outer.addEventListener('click', function(){console.log('outer false');}, false);
+      outer.addEventListener('click', function(){console.log('outer true');}, true);
+
+      var inner = document.getElementById('inner');
+      inner.addEventListener('click', function(){console.log('inner false');}, false);
+      inner.addEventListener('click', function(){console.log('inner true');}, true);
+    }      
+  </script>
+
+
+  <!-- 
+    个人总结
+    绑定在被点击元素的事件是按照代码顺序发生，其他元素通过冒泡或者捕获“感知”的事件，
+    按照W3C的标准，先发生捕获事件，后发生冒泡事件。
+    所有事件的顺序是：其他元素捕获阶段事件 -> 本元素代码顺序事件 -> 其他元素冒泡阶段事件 。
+
+    备注： 本元素代码顺序事件 指：谁先调用谁先执行 不分捕获还是冒泡
+
+   -->
+  <div id="one" class="marginB50">1
+    <div id="two">2
+      <div id="three">3
+        <div id="four">4</div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var one = document.getElementById('one');
+    var two = document.getElementById('two');
+    var three = document.getElementById('three');
+    var four = document.getElementById('four');
+
+    /*one.addEventListener('click',function(){
+      console.log('one')
+    },false)
+    two.addEventListener('click',function(){
+      console.log('two')
+    },false)
+    three.addEventListener('click',function(){
+      console.log('three')
+    },false)
+    four.addEventListener('click',function(){
+      console.log('four')
+    },false)*/
+
+
+    /*one.addEventListener('click', function() {
+      console.log('one')
+    }, true);
+    two.addEventListener('click', function() {
+      console.log('two')
+    }, false);
+    three.addEventListener('click', function() {
+      console.log('three');
+    }, true);
+    four.addEventListener('click', function() {
+      console.log('four');
+    }, false);*/
+
+
+    /*one.addEventListener('click', function() {
+      console.log('one');
+    }, true);
+    two.addEventListener('click', function() {
+      console.log('two,bubble');
+    }, false);
+    two.addEventListener('click', function() {
+      console.log('two,capture');
+    }, true);
+    three.addEventListener('click', function() {
+      console.log('three,bubble');
+    }, true);
+    four.addEventListener('click', function() {
+      console.log('four');
+    }, true);*/
+
+  </script>
+
+
+
+
+
+  <div id="p">
+    parent
+    <div id="c">
+      child
+    </div>
+  </div>
+  <script type="text/javascript">
+    window.alert = function (msg) {
+      console.log(msg);
+    };
+    var p = document.getElementById('p'),
+        c = document.getElementById('c');
+    p.addEventListener('click', function (e) {
+      alert('父节点冒泡')
+    }, false);
+
+    c.addEventListener('click', function (e) {
+      alert('子节点捕获')
+    }, true);
+    c.addEventListener('click', function (e) {
+      alert('子节点冒泡')
+    }, false);
+    p.addEventListener('click', function (e) {
+      alert('父节点捕获')
+    }, true);
+  </script>
+
+</body>
+</html>

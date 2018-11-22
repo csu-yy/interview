@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>圣杯布局</title>
+  <style type="text/css">
+    *{margin: 0;padding: 0;}
+    .container{
+      display: flex;
+      height: 100vh;
+    }
+    aside{
+      width: 50px;
+      background: #ccc;
+    }
+    nav{
+      width: 80px;
+      background: #ccc;
+      order: -1;
+    }
+    main{
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <main>main</main>
+    <aside>aside</aside>
+    <nav>nav</nav>
+  </div>
+</body>
+</html>

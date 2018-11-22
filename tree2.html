@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div class="root">
+    <div class="container">
+      <section class="sidebar">
+        <ul class="menu">
+          <li><a></a></li>
+          <li><a></a></li>
+        </ul>
+      </section>
+      <section class="main">
+        <article class="paragraph"></article>
+        <p class="note"></p>
+      </section>
+    </div>
+  </div>
+  <script type="text/javascript">
+    // 深度优先遍历  先序遍历
+    function dfs_dlr (node,deep=1) {
+      if(!node){
+        return
+      }
+      console.log(`${node.nodeName}.${node.classList}  ${deep}`)
+      if(!node.children.length){
+        return
+      }
+
+      Array.from(node.children).forEach((item,index,arr)=>{
+        dfs_dlr(item,deep+1)
+      })
+    }
+    dfs_dlr(document.body.querySelector('.root'),1)
+
+
+    
+
+
+
+
+
+
+
+  </script>
+</body>
+</html>

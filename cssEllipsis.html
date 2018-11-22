@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>多行文本超出显示省略号</title>
+</head>
+<body>
+  <!-- 
+    说明： 参考文章链接 https://mp.weixin.qq.com/s/aMXJbLBjQWBGeLPtxvdHrw
+    合理的截断多行文本是件不容易的事情，我们通常采用几种方法解决
+    1 overflow: hidden  直接隐藏多余的文本
+    2 text-overflow: ellipsis  只适用于单行文本的处理
+    3 各种比较脆弱的JavaScript实现，之所以说这种实现比较脆弱是由于需要文本长度的变化时刻得到回流（relayout）后的布局信息，如宽度
+
+   -->
+
+   <!-- 方法一 利用Webkit提供的扩展属性 -webkit-line-clamp 该属性并不是css规范中的属性，需要配合其他三个属性
+    1 display： -webkit-box          设置块元素的布局为伸缩布局
+    2 -webkit-box-orient：vertical   设置伸缩项的布局方向
+    3 text-overflow: hidden          超出盒子的部分使用省略号表示
+    -->
+    <style type="text/css">
+      .method1{
+        display: none;
+        width: 220px;
+        height: 44px;
+        font-size: 14px;
+        line-height: 25px;
+        border: 1px solid #ddd;
+        
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+    </style>
+    <div class="method1">
+      最新最实用的产品测评，科技产品推荐，避免消费者选择困难及购买焦虑；推荐最新、最潮的智能单品，满足科技爱好者的好奇心，满足品质生活的需求。
+    </div>
+
+
+    <!-- 方法二  -->
+    <!-- 
+    参考链接： http://www.css88.com/archives/5206
+    这里注意几点：
+    1、height高度真好是line-height的3倍；
+    2、结束的省略好用了半透明的png做了减淡的效果，或者设置背景颜色；
+    3、IE6-7不显示content内容，所以要兼容IE6-7可以是在内容中加入一个标签，比如用<span class="line-clamp">...</span>去模拟；
+    4、要支持IE8，需要将::after替换成:after；
+     -->
+    <style type="text/css">
+      p{
+        width: 300px;
+        position: relative;
+        line-height: 1.4em;
+        /* 3 times the line-height to show 3 line*/
+        height: 4.2em;
+        overflow: hidden;
+      }
+      p::after{
+        content: '...';
+        font-weight: bold;
+        position: absolute;
+        bottom:0;
+        right: 0;
+        padding: 0 20px 1px 45px;
+        background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
+      }
+    </style>
+    <p>最新最实用的产品测评，科技产品推荐，避免消费者选择困难及购买焦虑；推荐最新、最潮的智能单品，满足科技爱好者的好奇心，满足品质生活的需求。最新最实用的产品测评，科技产品推荐，避免消费者选择困难及购买焦虑；推荐最新、最潮的智能单品，满足科技爱好者的好奇心，满足品质生活的需求。</p>
+</body>
+</html>

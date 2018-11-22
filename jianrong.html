@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>兼容</title>
+</head>
+<body>
+  <!-- 键盘事件的兼容性写法 
+      IE  用event.keCode方法获取当前被按下的键盘按键值
+      而 NetScape/FireFox/Opera用的则是event.which
+
+      IE  只有keyCode属性，
+      FireFox  中有which和charCode属性，
+      Opera    中有keyCode和which属性，
+      Chrome   中有keyCode、which和charCode属性。
+  -->
+  <input id='inp'>
+  <div id="result"></div>
+  <script type="text/javascript">
+    var inp = document.getElementById('inp')
+    var result = document.getElementById('result')
+    function getkeyCode(e){
+      var e = e?(window.event?window.event:'')
+      var keyCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+      return keyCode;
+    }
+
+    document.getElementById("inp").onkeypress = function(e) {  
+      e = e || window.event;  
+      key = e.keyCode || e.which || e.charCode;  
+      alert("按键码: " + key + " 字符: " + String.fromCharCode(key));       
+    };  
+  </script>
+</body>
+</html>

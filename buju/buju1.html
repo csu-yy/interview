@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>布局</title>
+  <style type="text/css">
+    *{margin: 0;padding: 0;}
+    header{
+      height: 100px;
+      background: #efefef;
+    }
+    footer{
+      height: 100px;
+      background: #efefef;
+    }
+    .container{
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .con{
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>header</header>
+    <div class="con">内容</div>
+    <footer>footer</footer>
+  </div>
+</body>
+</html>
